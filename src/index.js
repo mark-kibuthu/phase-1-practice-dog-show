@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('dog-form');
     const tableBody = document.getElementById('table-body');
   
-    // Fetch and display dogs on page load
+    
     function fetchAndDisplayDogs() {
       fetch('http://localhost:3000/dogs')
         .then(response => response.json())
         .then(dogs => {
-          tableBody.innerHTML = ''; // Clear existing table rows
+          tableBody.innerHTML = ''; 
           dogs.forEach(dog => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -20,17 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             tableBody.appendChild(tr);
   
-            // Add event listener to edit button
+            
             const editButton = tr.querySelector('.edit-btn');
             editButton.addEventListener('click', () => {
-              populateForm(dog); // Populate form with current dog's data
+              populateForm(dog); 
             });
           });
         })
         .catch(error => console.error('Error fetching dogs:', error));
     }
   
-    // Function to populate form with dog data for editing
     function populateForm(dog) {
       form['id'].value = dog.id;
       form['name'].value = dog.name;
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       form['sex'].value = dog.sex;
     }
   
-    // Handle form submission for editing dog
+    
     form.addEventListener('submit', event => {
       event.preventDefault();
       const formData = new FormData(form);
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
         .then(response => response.json())
         .then(updatedDog => {
-          // Update the table row with the updated dog information
           const rowToUpdate = tableBody.querySelector(`[data-id="${updatedDog.id}"]`);
           if (rowToUpdate) {
             rowToUpdate.innerHTML = `
@@ -69,12 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
               </td>
             `;
           }
-          form.reset(); // Clear form fields
+          form.reset(); 
         })
         .catch(error => console.error('Error updating dog:', error));
     });
   
-    // Initial fetch and display of dogs
     fetchAndDisplayDogs();
   });
   
